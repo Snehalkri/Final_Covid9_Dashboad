@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const app = require('express');
 const nodemailer = require('nodemailer');
-// const session = require('express-session')
 const  db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
@@ -40,12 +39,6 @@ async function main() {
     html: "<b>Thank you for reaching us! You are successfully registered.</b>", // html body
   });
 
-//   console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-  // Preview only available when sending through an Ethereal account
-//   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
     db.query("SELECT * FROM users WHERE email = ?",[email] ,async (error,result)=>{
         if(error) throw error;
@@ -100,20 +93,6 @@ exports.login = async (req,res) =>{
                     console.log(id);
                     req.session.userId = id;
                     console.log(req.session.userId);
-                    // user.session.user = id;
-                    // console.log(user.session.user);
-                    // const token = jwt.sign({id} , process.env.JWT_SECRET , {
-                    //     expiresIn:process.env.JWT_EXPIRES_IN
-                    // })
-
-                    // const cookieOptions = {
-                    //     expires:new Date(
-                    //         Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-                    //     ),
-                    //     httpOnly:true
-                    // }
-
-                    // res.cookie('jwt' , token , cookieOptions);
                     if(req.session.userId){
                         res.status(200).redirect('/home')
                     }else{
@@ -127,10 +106,3 @@ exports.login = async (req,res) =>{
     }
   
 }
-
-// app.get('/logout', (req, res) => {
-//     res.clearCookie('token');
-//     return res.redirect('/');
-//   });
-
-
